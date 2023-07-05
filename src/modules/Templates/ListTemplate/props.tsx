@@ -66,5 +66,15 @@ export const columnsListTemplate: ColumnsType<ITemplateItem> = [
     dataIndex: "createdTime",
     width: 200,
     key: "createdTime",
+    render: (createdTime: number) => new Date(createdTime).toLocaleString(),
+  },
+  {
+    title: "Action",
+    // dataIndex: "action",
+    width: 200,
+    key: "action",
+    render: (_, item) => (
+      <Link to={`/template/${item?.templateId}`}>Xem chi tiết</Link>
+    ),
   },
 ]

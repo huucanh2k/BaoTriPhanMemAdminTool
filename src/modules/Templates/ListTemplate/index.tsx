@@ -47,7 +47,6 @@ const ListTemplate = () => {
     filters
     // sorter: SorterResult<ITemplateItem>
   ) => {
-    console.log({ filters })
     const { status } = filters
     setTableParams({
       pagination,
@@ -56,11 +55,6 @@ const ListTemplate = () => {
         status: status as FilterValue,
       },
     })
-
-    // `dataSource` is useless since `pageSize` changed
-    if (pagination.pageSize !== tableParams.pagination?.pageSize) {
-      // setData([])
-    }
   }
 
   return (
