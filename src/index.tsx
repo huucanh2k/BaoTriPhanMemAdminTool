@@ -1,16 +1,25 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
-import App from "./App"
-import reportWebVitals from "./reportWebVitals"
-import "./index.css"
 import { Provider } from "react-redux"
+import App from "./App"
 import { store } from "./app/store"
+import "./index.css"
+import reportWebVitals from "./reportWebVitals"
+
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client"
+
+const client = new ApolloClient({
+  uri: "http://localhost:4000",
+  cache: new InMemoryCache(),
+})
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>
     </Provider>
   </React.StrictMode>
 )

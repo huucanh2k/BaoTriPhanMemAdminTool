@@ -1,8 +1,9 @@
 {
-  "name": "zznsopentool",
+  "name": "admin",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.7.17",
     "@reduxjs/toolkit": "^1.9.5",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
@@ -16,6 +17,7 @@
     "craco": "^0.0.3",
     "craco-antd": "^2.0.0",
     "craco-less": "^2.0.0",
+    "graphql": "^16.7.1",
     "nanobar": "^0.4.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

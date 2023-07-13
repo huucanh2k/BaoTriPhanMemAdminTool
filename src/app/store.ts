@@ -1,9 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit"
-import listTemplateReducer from "src/modules/Templates/templatesSlice"
 
 export const store = configureStore({
   reducer: {
-    templates: listTemplateReducer,
   },
 })
 
