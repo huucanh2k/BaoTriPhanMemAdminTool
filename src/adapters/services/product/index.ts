@@ -7,6 +7,7 @@ const FETCH_PRODUCT = gql`
         hasNextPage
         hasPreviousPage
       }
+      totalCount
       items {
         id
         name

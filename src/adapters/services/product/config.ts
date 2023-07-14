@@ -24,6 +24,24 @@ export interface IProduct {
   ratingAvg: number
 }
 
+export const StatusConfig = {
+  Enum: {
+    PENDING: "PENDING",
+    PROCESSING: "PROCESSING",
+    DONE: "DONE",
+  },
+  Color: {
+    PENDING: "orange",
+    PROCESSING: "blue",
+    DONE: "green",
+  },
+  Label: {
+    PENDING: "Đang chờ",
+    PROCESSING: "Đang xử lý",
+    DONE: "Đã hoàn thành",
+  },
+}
+
 export interface IProductOrder {
   id: string
   owner: {

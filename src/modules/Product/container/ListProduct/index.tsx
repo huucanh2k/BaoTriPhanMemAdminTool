@@ -1,11 +1,20 @@
-import { Input, Row, Table, TablePaginationConfig, Typography } from "antd"
 import { red } from "@ant-design/colors"
-import { columnsListProduct } from "./props"
-import { mockupData } from "./dataMockup"
+import { useQuery } from "@apollo/client"
+import {
+  Button,
+  Input,
+  Row,
+  Table,
+  TablePaginationConfig,
+  Typography,
+} from "antd"
 import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router-dom"
+import ProductService from "src/adapters/services/product"
 import { removeEmpty } from "src/utils"
-import { FilterValue } from "antd/es/table/interface"
+import { useDebounce } from "usehooks-ts"
+import { columnsListProduct } from "./props"
+import { PlusOutlined } from "@ant-design/icons"
 
 const { Search } = Input
 
@@ -17,13 +26,30 @@ interface TableParams {
 }
 
 export default function ProductManagement() {
-  const [data, setData] = useState(mockupData)
   let [searchParams, setSearchParams] = useSearchParams()
-  const [loading, setLoading] = useState(false)
   const [tableParams, setTableParams] = useState<TableParams>(() =>
     getInitValueTableParams(searchParams)
   )
   const [searchValue, setSearchValue] = useState("")
+  const searchValueDebounce = useDebounce(searchValue, 300)
+
+  const { loading, error, data, refetch } = useQuery(
+    ProductService.FETCH_PRODUCT,
+    {
+      variables: () => {
+        const { current = 1, pageSize = 10 } = tableParams.pagination || {}
+        return {
+          skip: (current - 1) * pageSize,
+          take: pageSize,
+          condition: {
+            name: {
+              contains: searchValue || "",
+            },
+          },
+        }
+      },
+    }
+  )
 
   useEffect(() => {
     const { current, pageSize } = tableParams.pagination || {}
@@ -33,12 +59,21 @@ export default function ProductManagement() {
       take: pageSize,
     }
     const filters = {
-      name: searchValue,
+      name: searchValueDebounce,
     }
     setSearchParams(removeEmpty({ ...pagination, ...filters }))
+    refetch({
+      skip: (current - 1) * pageSize,
+      take: pageSize,
+      condition: {
+        name: {
+          contains: searchValueDebounce || "",
+        },
+      },
+    })
     // Call api here, set data to setData
     // setLoading(true)
-  }, [JSON.stringify(tableParams), searchValue])
+  }, [JSON.stringify(tableParams), searchValueDebounce])
 
   const handleTableChange = (pagination) => {
     setTableParams({
@@ -46,6 +81,7 @@ export default function ProductManagement() {
     })
   }
 
+  // if (result.loading) return <div>Loading...</div>
   return (
     <div>
       <Row justify="space-between">
@@ -59,13 +95,16 @@ export default function ProductManagement() {
           onChange={({ target: { value } }) => setSearchValue(value)}
         />
       </Row>
+      <Row className="my-3">
+        <Button icon={<PlusOutlined />} size="large" type="primary">Thêm sản phẩm</Button>
+      </Row>
       <Table
         columns={columnsListProduct}
         rowKey={(record) => record.id}
-        dataSource={data.items}
+        dataSource={data?.productsWithPagination?.items}
         pagination={{
           ...tableParams.pagination,
-          total: data.totalCount,
+          total: data?.productsWithPagination?.totalCount,
         }}
         loading={loading}
         onChange={handleTableChange}

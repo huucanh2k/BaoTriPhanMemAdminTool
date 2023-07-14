@@ -15,7 +15,7 @@ export const mockupData = {
       email: "ncdai@penphy.edu.vn",
       phoneNumber: "0797043481",
       shippingAddress: "KV. Tân An, P. Thuận Hưng, Q. Thốt Nốt, TP. Cần Thơ",
-      status: "Chờ xử lý",
+      status: "PENDING",
       createdAt: "2023-07-08T06:43:16.595Z",
       updatedAt: "2023-05-16T12:44:38.003Z",
       reasonsForRejection: "NONE",

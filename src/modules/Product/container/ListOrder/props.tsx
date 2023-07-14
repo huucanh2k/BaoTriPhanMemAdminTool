@@ -1,6 +1,9 @@
-import { Typography } from "antd"
+import { Tag, Typography } from "antd"
 import { ColumnsType } from "antd/es/table"
-import { IProductOrder } from "src/adapters/services/product/config"
+import {
+  IProductOrder,
+  StatusConfig
+} from "src/adapters/services/product/config"
 
 const { Text, Link } = Typography
 
@@ -39,7 +42,9 @@ export const columnsListOrder: ColumnsType<IProductOrder> = [
     key: "status",
     width: 100,
     align: "center",
-    render: (status) => <Text mark>{status}</Text>,
+    render: (status) => (
+      <Tag color={StatusConfig.Color[status]}>{StatusConfig.Label[status]}</Tag>
+    ),
   },
   {
     title: "Ngày đặt",
