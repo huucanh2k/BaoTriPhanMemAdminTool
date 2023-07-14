@@ -9,12 +9,13 @@ import {
   Typography,
 } from "antd"
 import { useEffect, useState } from "react"
-import { useSearchParams } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import ProductService from "src/adapters/services/product"
 import { removeEmpty } from "src/utils"
 import { useDebounce } from "usehooks-ts"
 import { columnsListProduct } from "./props"
 import { PlusOutlined } from "@ant-design/icons"
+import { ROUTE } from "src/constants/route"
 
 const { Search } = Input
 
@@ -31,6 +32,7 @@ export default function ProductManagement() {
     getInitValueTableParams(searchParams)
   )
   const [searchValue, setSearchValue] = useState("")
+  const navigate = useNavigate()
   const searchValueDebounce = useDebounce(searchValue, 300)
 
   const { loading, error, data, refetch } = useQuery(
@@ -96,7 +98,14 @@ export default function ProductManagement() {
         />
       </Row>
       <Row className="my-3">
-        <Button icon={<PlusOutlined />} size="large" type="primary">Thêm sản phẩm</Button>
+        <Button
+          icon={<PlusOutlined />}
+          size="large"
+          type="primary"
+          onClick={() => navigate(ROUTE.PRODUCT_CREATE)}
+        >
+          Thêm sản phẩm
+        </Button>
       </Row>
       <Table
         columns={columnsListProduct}

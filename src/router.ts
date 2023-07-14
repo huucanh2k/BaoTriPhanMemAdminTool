@@ -1,24 +1,26 @@
 import {
-  UploadOutlined,
-  UserOutlined,
-  ShoppingCartOutlined,
-  UnorderedListOutlined,
-  StockOutlined,
-  PieChartOutlined,
+  DashboardOutlined,
   FundOutlined,
-  DashboardOutlined
+  PieChartOutlined,
+  ShoppingCartOutlined,
+  StockOutlined,
+  UnorderedListOutlined,
+  UploadOutlined,
+  UserOutlined
 } from "@ant-design/icons"
 import { createBrowserRouter } from "react-router-dom"
 import Layout from "./Layout"
+import { ROUTE } from "./constants/route"
+import UserInfo from "./modules/Account/container/Account"
 import Dashboard from "./modules/Dashboard"
 import ProductContainer from "./modules/Product/container"
-import ProductManagement from "./modules/Product/container/ListProduct"
+import CreateProduct from "./modules/Product/container/CreateProduct"
+import DetailProduct from "./modules/Product/container/DetailProduct"
 import ListOrder from "./modules/Product/container/ListOrder"
+import ProductManagement from "./modules/Product/container/ListProduct"
 import StatisticContainer from "./modules/Statistic/container"
 import OrderStatistic from "./modules/Statistic/container/OrderStatistic"
 import RevenueStatistic from "./modules/Statistic/container/RevenueStatistic"
-import UserInfo from "./modules/Account/container/Account"
-import { ROUTE } from "./constants/route"
 
 const router = createBrowserRouter([
   {
@@ -45,6 +47,14 @@ const router = createBrowserRouter([
             path: ROUTE.PRODUCT_ORDER,
             Component: ListOrder,
           },
+          {
+            path: ROUTE.PRODUCT_CREATE,
+            Component: CreateProduct
+          },
+          {
+            path: ROUTE.PRODUCT_DETAIl,
+            Component: DetailProduct
+          }
         ],
       },
       {

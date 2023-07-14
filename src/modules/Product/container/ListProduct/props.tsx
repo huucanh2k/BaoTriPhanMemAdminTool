@@ -1,7 +1,10 @@
-import { Image, Tag, Typography } from "antd"
+import { Button, Image, Tag, Typography } from "antd"
 import { ColumnsType } from "antd/es/table"
 import { IProduct } from "src/adapters/services/product/config"
 import { formatNumber } from "src/utils"
+import { EyeOutlined, DeleteOutlined } from "@ant-design/icons"
+import { useMutation } from "@apollo/client"
+import ProductService from "src/adapters/services/product"
 
 const { Text, Link } = Typography
 
@@ -12,6 +15,7 @@ export const columnsListProduct: ColumnsType<IProduct> = [
     key: "id",
     width: 100,
     fixed: "left",
+    render: (id) => <Link href={`/product/${id}`}>{id}</Link>,
   },
   {
     title: "Tên sản phẩm",
@@ -89,5 +93,16 @@ export const columnsListProduct: ColumnsType<IProduct> = [
     align: "center",
     width: 80,
     render: (ratingAvg) => <Text mark>{Number(ratingAvg).toFixed(2)}</Text>,
+  },
+  {
+    title: "Hành động",
+    dataIndex: "action",
+    key: "action",
+    align: "center",
+    width: 100,
+    fixed: "right",
+    render: (value, record) => (
+      <Link href={`/product/${record.id}`}>Chi tiết</Link>
+    ),
   },
 ]
