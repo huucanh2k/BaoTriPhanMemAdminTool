@@ -1,13 +1,15 @@
 import { red } from "@ant-design/colors"
-import { Input, Row, Table, TablePaginationConfig, Typography } from "antd"
+import { useQuery } from "@apollo/client"
+import { Button, Input, Row, Table, TablePaginationConfig, Typography } from "antd"
 import { useEffect, useState } from "react"
 import { useNavigate, useSearchParams } from "react-router-dom"
-import { removeEmpty } from "src/utils"
-import { mockupData } from "./dataMockup"
-import { columnsListOrder } from "./props"
 import ProductService from "src/adapters/services/product"
+import { removeEmpty } from "src/utils"
 import { useDebounce } from "usehooks-ts"
-import { useQuery } from "@apollo/client"
+import { columnsListOrder } from "./props"
+import { PlusOutlined } from "@ant-design/icons"
+import { ROUTE } from "src/constants/route"
+
 
 const { Search } = Input
 
@@ -23,7 +25,6 @@ export default function ListOrder() {
     getInitValueTableParams(searchParams)
   )
   const [searchValue, setSearchValue] = useState("")
-  const navigate = useNavigate()
   const searchValueDebounce = useDebounce(searchValue, 300)
 
   const { loading, error, data, refetch } = useQuery(
@@ -35,8 +36,8 @@ export default function ListOrder() {
           skip: (current - 1) * pageSize,
           take: pageSize,
           condition: {
-            name: {
-              contains: searchValue || "",
+            id: {
+              eq: searchValue ? searchValue : undefined,
             },
           },
         }
@@ -52,20 +53,18 @@ export default function ListOrder() {
       take: pageSize,
     }
     const filters = {
-      name: searchValueDebounce,
+      id: searchValueDebounce,
     }
     setSearchParams(removeEmpty({ ...pagination, ...filters }))
     refetch({
       skip: (current - 1) * pageSize,
       take: pageSize,
       condition: {
-        name: {
-          contains: searchValueDebounce || "",
+        id: {
+          eq: searchValueDebounce ? searchValueDebounce : undefined,
         },
       },
     })
-    // Call api here, set data to setData
-    // setLoading(true)
   }, [JSON.stringify(tableParams), searchValueDebounce])
 
   const handleTableChange = (pagination) => {
@@ -90,10 +89,10 @@ export default function ListOrder() {
       <Table
         columns={columnsListOrder}
         rowKey={(record) => record.id}
-        dataSource={data.items}
+        dataSource={data?.orderWithPagination?.items}
         pagination={{
           ...tableParams.pagination,
-          total: data.totalCount,
+          total: data?.orderWithPagination?.totalCount,
         }}
         loading={loading}
         onChange={handleTableChange}
@@ -105,14 +104,14 @@ export default function ListOrder() {
 
 function getInitValueTableParams(searchParams: URLSearchParams) {
   const queryStringObj = Object.fromEntries(searchParams.entries())
-  const { offset, limit, name } = queryStringObj
+  const { offset, limit, id } = queryStringObj
   return {
     pagination: {
       current: Number(offset) / Number(limit) + 1 || 1,
       pageSize: Number(limit) || 10,
     },
     filters: {
-      name,
+      id,
     },
   }
 }

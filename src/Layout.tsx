@@ -1,13 +1,17 @@
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons"
-import { Button, Layout as LayoutAtd, Menu, MenuProps } from "antd"
-import React, { useState } from "react"
+import { Button, Col, Layout as LayoutAtd, Menu, MenuProps, Row } from "antd"
+import React, { useEffect, useState } from "react"
 import { Outlet, useLocation, useNavigate } from "react-router-dom"
 import { navConfig } from "./router"
+import Title from "antd/es/typography/Title"
+import { ROUTE } from "./constants/route"
+import { PoweroffOutlined } from "@ant-design/icons"
 
 const { Header, Sider, Content } = LayoutAtd
 
 const Layout: React.FC = () => {
   const navigate = useNavigate()
+  const userInfo = JSON.parse(localStorage.getItem("user") || "{}")
 
   const menuItems: MenuProps["items"] = navConfig.map((item) => ({
     key: item.path || "",
@@ -27,10 +31,27 @@ const Layout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false)
   const path = useLocation().pathname
 
+  const handleLogout = () => {
+    localStorage.removeItem("user")
+    navigate(ROUTE.SIGN_IN)
+  }
+
+  useEffect(() => {
+    if (!userInfo) {
+      navigate(ROUTE.SIGN_IN)
+    }
+  }, [userInfo])
+
   return (
     <LayoutAtd style={{ minHeight: "100vh" }}>
       <Sider trigger={null} collapsible collapsed={collapsed} width={"250px"}>
-        
+        <Title
+          level={3}
+          style={{ color: "white", textAlign: "center" }}
+          className="mt-4"
+        >
+          Admin Tool
+        </Title>
         <Menu
           theme="dark"
           mode="inline"
@@ -39,7 +60,10 @@ const Layout: React.FC = () => {
         ></Menu>
       </Sider>
       <LayoutAtd>
-        <Header style={{ padding: 0, background: "white" }}>
+        <Header
+          style={{ padding: 0, background: "white" }}
+          className="flex justify-between items-center"
+        >
           <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -50,6 +74,18 @@ const Layout: React.FC = () => {
               height: 64,
             }}
           />
+          <div className="flex gap-4">
+            <span className="text-lg">
+              Xin chào, <b>{userInfo.fullName}</b>
+            </span>
+            <Button
+              type="primary"
+              onClick={handleLogout}
+              icon={<PoweroffOutlined />}
+            >
+              Đăng xuất
+            </Button>
+          </div>
         </Header>
         <Content
           style={{

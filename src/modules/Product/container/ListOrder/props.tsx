@@ -2,8 +2,9 @@ import { Tag, Typography } from "antd"
 import { ColumnsType } from "antd/es/table"
 import {
   IProductOrder,
-  StatusConfig
+  StatusConfig,
 } from "src/adapters/services/product/config"
+import { ROUTE } from "src/constants/route"
 
 const { Text, Link } = Typography
 
@@ -14,6 +15,7 @@ export const columnsListOrder: ColumnsType<IProductOrder> = [
     key: "id",
     width: 80,
     fixed: "left",
+    render: (id) => <Link href={`/product/order/${id}`}>{id}</Link>,
   },
   {
     title: "Tên người đặt",

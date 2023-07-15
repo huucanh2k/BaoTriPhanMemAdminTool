@@ -121,9 +121,72 @@ const DELETE_PRODUCT = gql`
   }
 `
 
+const FETCH_ORDER_BY_ID = gql`
+  query getOrder($condition: OrderFilterInput) {
+    order(where: $condition) {
+      id
+      reasonsForRejection
+      statusEnum
+      status
+      createdAt
+      updatedAt
+      ownerId
+      owner {
+        id
+        fullName
+        email
+        phoneNumber
+        address
+        avatar
+      }
+      fullName
+      email
+      phoneNumber
+      shippingAddress
+      products {
+        productId
+        name
+        featuredImage
+        price
+        total
+        discount
+        quantity
+      }
+      paymentMethod
+      pushNotification
+    }
+  }
+`
+
+const DELETE_ORDER = gql`
+  mutation deleteOrder($input: DeleteOrderInput!) {
+    deleteOrder(input: $input) {
+      string
+    }
+  }
+`
+
+const UPDATE_ORDER = gql`
+  mutation updateOrder($input: UpdateOrderInput!) {
+    updateOrder(input: $input) {
+      string
+    }
+  }
+`
+
 const FETCH_ORDERS = gql`
-  query getOrders($condition: OrderFilterInput, $skip: Int, $take: Int) {
-    ordersWithPagination(where: $condition, skip: $skip, take: $take) {
+  query getOrders(
+    $condition: OrderFilterInput
+    $skip: Int
+    $take: Int
+    $sort: [OrderSortInput!]
+  ) {
+    orderWithPagination(
+      where: $condition
+      skip: $skip
+      take: $take
+      order: $sort
+    ) {
       pageInfo {
         hasNextPage
         hasPreviousPage
@@ -131,6 +194,35 @@ const FETCH_ORDERS = gql`
       totalCount
       items {
         id
+        reasonsForRejection
+        statusEnum
+        status
+        createdAt
+        updatedAt
+        ownerId
+        owner {
+          id
+          fullName
+          email
+          phoneNumber
+          address
+          avatar
+        }
+        fullName
+        email
+        phoneNumber
+        shippingAddress
+        products {
+          productId
+          name
+          featuredImage
+          price
+          total
+          discount
+          quantity
+        }
+        paymentMethod
+        pushNotification
       }
     }
   }
@@ -145,6 +237,9 @@ const ProductService = {
   DELETE_PRODUCT,
 
   FETCH_ORDERS,
+  FETCH_ORDER_BY_ID,
+  DELETE_ORDER,
+  UPDATE_ORDER
 }
 
 export default ProductService

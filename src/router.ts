@@ -6,7 +6,7 @@ import {
   StockOutlined,
   UnorderedListOutlined,
   UploadOutlined,
-  UserOutlined
+  UserOutlined,
 } from "@ant-design/icons"
 import { createBrowserRouter } from "react-router-dom"
 import Layout from "./Layout"
@@ -21,6 +21,8 @@ import ProductManagement from "./modules/Product/container/ListProduct"
 import StatisticContainer from "./modules/Statistic/container"
 import OrderStatistic from "./modules/Statistic/container/OrderStatistic"
 import RevenueStatistic from "./modules/Statistic/container/RevenueStatistic"
+import DetailOrder from "./modules/Product/container/DetailOrder"
+import SignIn from "./modules/Auth/container/SignIn"
 
 const router = createBrowserRouter([
   {
@@ -48,13 +50,17 @@ const router = createBrowserRouter([
             Component: ListOrder,
           },
           {
+            path: ROUTE.ORDER_DETAIL,
+            Component: DetailOrder,
+          },
+          {
             path: ROUTE.PRODUCT_CREATE,
-            Component: CreateProduct
+            Component: CreateProduct,
           },
           {
             path: ROUTE.PRODUCT_DETAIl,
-            Component: DetailProduct
-          }
+            Component: DetailProduct,
+          },
         ],
       },
       {
@@ -72,6 +78,10 @@ const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    path: ROUTE.SIGN_IN,
+    Component: SignIn,
   },
 ])
 
