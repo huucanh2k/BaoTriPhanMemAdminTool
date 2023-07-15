@@ -13,7 +13,7 @@ export default function SignIn(props: ISignInProps) {
     // Save token to local storage
     const singIn = new Promise((resolve, reject) => {
       setTimeout(() => {
-        if (values.username === "canhth" && values.password === "123456789") {
+        if (values.username === "admin" && values.password === "123456789") {
           resolve(null)
         } else {
           reject(null)
@@ -26,7 +26,7 @@ export default function SignIn(props: ISignInProps) {
           "user",
           JSON.stringify({
             username: values.username,
-            fullName: "Trần Hữu Cảnh",
+            fullName: "Trần Văn A",
             phoneNumber: "0123456789",
             address: "Hồ Chí Minh",
             email: "tranhuucanh2000@gmail.com",
@@ -34,7 +34,7 @@ export default function SignIn(props: ISignInProps) {
           })
         )
         message.success("Đăng nhập thành công")
-        navigate(ROUTE.DASHBOARD)
+        navigate(ROUTE.PRODUCT_LIST)
       })
       .catch(() => {
         message.error("Đăng nhập thất bại")
@@ -49,7 +49,6 @@ export default function SignIn(props: ISignInProps) {
     <Form
       name="basic"
       labelCol={{ span: 24 }}
-      initialValues={{ remember: true }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
@@ -72,14 +71,6 @@ export default function SignIn(props: ISignInProps) {
         rules={[{ required: true, message: "Làm ơn nhập mật khẩu" }]}
       >
         <Input.Password />
-      </Form.Item>
-
-      <Form.Item
-        name="remember"
-        valuePropName="checked"
-        wrapperCol={{ offset: 8, span: 16 }}
-      >
-        <Checkbox>Remember me</Checkbox>
       </Form.Item>
 
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

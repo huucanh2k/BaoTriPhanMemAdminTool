@@ -87,11 +87,6 @@ const router = createBrowserRouter([
 
 export const navConfig = [
   {
-    icon: DashboardOutlined,
-    title: "Trung tâm điều khiển",
-    path: ROUTE.DASHBOARD,
-  },
-  {
     icon: UserOutlined,
     title: "Tài khoản",
     path: ROUTE.ACCOUNT,
@@ -99,6 +94,7 @@ export const navConfig = [
   {
     icon: ShoppingCartOutlined,
     title: "Sản phẩm",
+    key: ROUTE.PRODUCT,
     children: [
       {
         title: "Quản lý sản phẩm",
@@ -109,22 +105,6 @@ export const navConfig = [
         title: "Đơn đặt hàng",
         path: ROUTE.PRODUCT_ORDER,
         icon: UploadOutlined,
-      },
-    ],
-  },
-  {
-    icon: FundOutlined,
-    title: "Thống kê",
-    children: [
-      {
-        title: "Thống kê doanh thu",
-        path: ROUTE.STATISTIC_REVENUE,
-        icon: StockOutlined,
-      },
-      {
-        title: "Thống kê đơn hàng",
-        path: ROUTE.STATISTIC_ORDER,
-        icon: PieChartOutlined,
       },
     ],
   },

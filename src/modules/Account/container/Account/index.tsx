@@ -25,7 +25,6 @@ export default function AccountInfo(props: IAccountInfoProps) {
       form={form}
       name="basic"
       labelCol={{ span: 24 }}
-      initialValues={{ remember: true }}
       autoComplete="off"
       disabled={!isEdit}
     >

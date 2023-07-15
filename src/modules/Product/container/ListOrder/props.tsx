@@ -1,12 +1,13 @@
 import { Tag, Typography } from "antd"
 import { ColumnsType } from "antd/es/table"
+import { Link } from "react-router-dom"
 import {
   IProductOrder,
   StatusConfig,
 } from "src/adapters/services/product/config"
 import { ROUTE } from "src/constants/route"
 
-const { Text, Link } = Typography
+const { Text } = Typography
 
 export const columnsListOrder: ColumnsType<IProductOrder> = [
   {
@@ -15,7 +16,7 @@ export const columnsListOrder: ColumnsType<IProductOrder> = [
     key: "id",
     width: 80,
     fixed: "left",
-    render: (id) => <Link href={`/product/order/${id}`}>{id}</Link>,
+    render: (id) => <Link to={`/product/order/${id}`}>{id}</Link>,
   },
   {
     title: "Tên người đặt",

@@ -5,8 +5,9 @@ import { formatNumber } from "src/utils"
 import { EyeOutlined, DeleteOutlined } from "@ant-design/icons"
 import { useMutation } from "@apollo/client"
 import ProductService from "src/adapters/services/product"
+import { Link } from "react-router-dom"
 
-const { Text, Link } = Typography
+const { Text } = Typography
 
 export const columnsListProduct: ColumnsType<IProduct> = [
   {
@@ -15,7 +16,7 @@ export const columnsListProduct: ColumnsType<IProduct> = [
     key: "id",
     width: 100,
     fixed: "left",
-    render: (id) => <Link href={`/product/${id}`}>{id}</Link>,
+    render: (id) => <Link to={`/product/${id}`}>{id}</Link>,
   },
   {
     title: "Tên sản phẩm",
@@ -24,18 +25,18 @@ export const columnsListProduct: ColumnsType<IProduct> = [
     width: 150,
     fixed: "left",
   },
-  {
-    title: "Ảnh sản phẩm",
-    dataIndex: "featuredImage",
-    key: "featuredImage",
-    width: 100,
-    render: (featuredImage) => (
-      <Image
-        width={100}
-        src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-      />
-    ),
-  },
+  // {
+  //   title: "Ảnh sản phẩm",
+  //   dataIndex: "featuredImage",
+  //   key: "featuredImage",
+  //   width: 100,
+  //   render: (featuredImage) => (
+  //     <Image
+  //       width={100}
+  //       src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+  //     />
+  //   ),
+  // },
   {
     title: "Giá",
     dataIndex: "price",
@@ -93,16 +94,5 @@ export const columnsListProduct: ColumnsType<IProduct> = [
     align: "center",
     width: 80,
     render: (ratingAvg) => <Text mark>{Number(ratingAvg).toFixed(2)}</Text>,
-  },
-  {
-    title: "Hành động",
-    dataIndex: "action",
-    key: "action",
-    align: "center",
-    width: 100,
-    fixed: "right",
-    render: (value, record) => (
-      <Link href={`/product/${record.id}`}>Chi tiết</Link>
-    ),
   },
 ]

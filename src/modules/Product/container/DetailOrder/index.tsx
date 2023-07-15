@@ -95,7 +95,7 @@ export default function DetailOrder(props: IDetailOrderProps) {
 
   return (
     <>
-      <Descriptions bordered title="Chi tiết đơn hàng">
+      <Descriptions bordered title={<Title level={2}>Chi tiết đơn hàng</Title>}>
         <Descriptions.Item label="Số hoá đơn">{id}</Descriptions.Item>
         <Descriptions.Item label="Tên người đặt">
           {dataOrder?.fullName}
@@ -155,7 +155,14 @@ export default function DetailOrder(props: IDetailOrderProps) {
           </Popconfirm>
         </Col>
       </Row>
-      <Modal title="Sửa trạng thái" open={visible} onOk={handleSubmitForm}>
+      <Modal
+        title="Chỉnh sửa thông tin"
+        open={visible}
+        onOk={handleSubmitForm}
+        onCancel={() => setVisible(false)}
+        okText="Cập nhật"
+        cancelText="Hủy"
+      >
         <Form form={form} layout="vertical">
           <Form.Item name="fullName" label="Tên người đặt">
             <Input />

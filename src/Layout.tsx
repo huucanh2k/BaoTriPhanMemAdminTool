@@ -14,7 +14,7 @@ const Layout: React.FC = () => {
   const userInfo = JSON.parse(localStorage.getItem("user") || "{}")
 
   const menuItems: MenuProps["items"] = navConfig.map((item) => ({
-    key: item.path || "",
+    key: item.key || "",
     icon: React.createElement(item.icon),
     label: item.title,
     onClick: () => item.path && navigate(item.path),
@@ -57,6 +57,7 @@ const Layout: React.FC = () => {
           mode="inline"
           defaultSelectedKeys={[path]}
           items={menuItems}
+          openKeys={[ROUTE.PRODUCT]}
         ></Menu>
       </Sider>
       <LayoutAtd>
@@ -82,6 +83,7 @@ const Layout: React.FC = () => {
               type="primary"
               onClick={handleLogout}
               icon={<PoweroffOutlined />}
+              className="mr-4"
             >
               Đăng xuất
             </Button>

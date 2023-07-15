@@ -1,7 +1,8 @@
-import React from "react";
+import React from "react"
+import RevenueStatistic from "../Statistic/container/RevenueStatistic"
 
 const Dashboard = () => {
-  return <div>Dashboard</div>;
-};
+  return <RevenueStatistic />
+}
 
-export default Dashboard;
+export default Dashboard
